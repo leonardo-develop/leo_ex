@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Certified Associate: Game Developer Practice Exam</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        unity: {
+                            dark: '#161618',
+                            panel: '#222225',
+                            border: '#323236',
+                            accent: '#2196F3',
+                            accentHover: '#1976D2',
+                            success: '#10B981',
+                            danger: '#EF4444',
+                            warning: '#F59E0B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for sleek game-dev aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4B5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6B7280;
+        }
+        .code-snippet {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-unity-dark dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200 selection:bg-blue-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white dark:bg-unity-panel border-b border-gray-200 dark:border-unity-border sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand / Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md">
+                    <i class="fa-brands fa-unity text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base md:text-lg leading-tight tracking-tight">Unity Certified Associate</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">Game Developer Practice Exam (1000-Point Scale)</p>
+                </div>
+            </div>
+
+            <!-- Controls & Timer -->
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <!-- Timer Display (Hidden on Start Screen) -->
+                <div id="timer-container" class="hidden items-center space-x-2 bg-gray-100 dark:bg-unity-dark px-3 py-1.5 rounded-lg border border-gray-300 dark:border-unity-border font-mono text-sm font-semibold">
+                    <i class="fa-regular fa-clock text-blue-500"></i>
+                    <span id="timer-display">50:00</span>
+                </div>
+
+                <!-- Immediate Feedback Toggle -->
+                <div id="feedback-toggle-container" class="hidden md:flex items-center space-x-2">
+                    <label class="relative inline-flex items-center cursor-pointer" title="Show correct answer immediately upon selection">
+                        <input type="checkbox" id="instant-feedback-toggle" class="sr-only peer">
+                        <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        <span class="ml-2 text-xs font-medium text-gray-700 dark:text-gray-300">Instant Feedback</span>
+                    </label>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-unity-dark hover:bg-gray-200 dark:hover:bg-gray-800 border border-gray-300 dark:border-unity-border transition" aria-label="Toggle Dark Mode">
+                    <i id="theme-icon" class="fa-solid fa-sun text-amber-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==================== 1. START SCREEN ==================== -->
+        <section id="start-screen" class="max-w-3xl mx-auto mt-6">
+            <div class="bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-6 sm:p-10 shadow-xl">
+                <div class="flex items-center space-x-3 text-blue-500 font-semibold text-sm uppercase tracking-wider mb-2">
+                    <i class="fa-solid fa-certificate"></i>
+                    <span>Official Certification Simulation</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold mb-4 tracking-tight">Game Developer Practice Exam</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-base sm:text-lg mb-8 leading-relaxed">
+                    Test your readiness for the Unity Certified Associate exam. This comprehensive 50-question assessment evaluates your practical and theoretical knowledge across core engine systems, C# scripting, physics, shaders, animation, lighting, audio, and industry workflows.
+                </p>
+
+                <!-- Exam Specs Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-gray-50 dark:bg-unity-dark p-4 rounded-xl border border-gray-200 dark:border-unity-border text-center">
+                        <div class="text-2xl font-bold text-blue-500">50</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mt-1">Questions</div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-unity-dark p-4 rounded-xl border border-gray-200 dark:border-unity-border text-center">
+                        <div class="text-2xl font-bold text-emerald-500">1000</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mt-1">Max Score (20/Q)</div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-unity-dark p-4 rounded-xl border border-gray-200 dark:border-unity-border text-center">
+                        <div class="text-2xl font-bold text-amber-500">700</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mt-1">Passing Score</div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-unity-dark p-4 rounded-xl border border-gray-200 dark:border-unity-border text-center">
+                        <div class="text-2xl font-bold text-purple-500">50m</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mt-1">Time Limit</div>
+                    </div>
+                </div>
+
+                <!-- Exam Configuration Options -->
+                <div class="bg-gray-50 dark:bg-unity-dark rounded-xl p-5 border border-gray-200 dark:border-unity-border mb-8 space-y-4">
+                    <h3 class="font-semibold text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400">Exam Settings</h3>
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <div class="font-semibold">Randomize Question Order</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Shuffle all 50 questions and answer choices for a fresh attempt.</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="start-randomize-toggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+
+                    <div class="border-t border-gray-200 dark:border-unity-border pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <div class="font-semibold">Study Mode (Instant Feedback)</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Reveal the correct answer and explanation immediately after answering each question.</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="start-feedback-toggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <button id="start-exam-btn" class="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/20 transition transform active:scale-[0.99] flex items-center justify-center space-x-2 text-lg">
+                    <span>Start Practice Exam</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== 2. ACTIVE EXAM SCREEN ==================== -->
+        <section id="exam-screen" class="hidden">
+            <!-- Top Progress Bar -->
+            <div class="mb-6 bg-white dark:bg-unity-panel p-4 rounded-xl border border-gray-200 dark:border-unity-border shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-sm">
+                    <span class="font-semibold text-blue-500" id="question-counter">Question 1 of 50</span>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-gray-100 dark:bg-unity-dark border border-gray-200 dark:border-unity-border font-medium text-gray-600 dark:text-gray-300" id="question-category">Scene Navigation</span>
+                    <span class="text-gray-500 dark:text-gray-400 font-medium" id="answered-counter">0 / 50 Answered</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-unity-dark rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 2%"></div>
+                </div>
+            </div>
+
+            <!-- Main Two-Column Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Column: Question Card (8 cols on lg) -->
+                <div class="lg:col-span-8 flex flex-col">
+                    <div class="bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-6 sm:p-8 shadow-md flex-grow flex flex-col justify-between">
+                        <div>
+                            <!-- Question Header & Flag Button -->
+                            <div class="flex items-start justify-between gap-4 mb-6">
+                                <h2 id="question-text" class="text-lg sm:text-xl font-bold leading-snug">
+                                    Loading question...
+                                </h2>
+                                <button id="flag-btn" class="shrink-0 flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-gray-300 dark:border-unity-border text-sm font-medium hover:bg-gray-100 dark:hover:bg-unity-dark transition" title="Flag this question for review">
+                                    <i id="flag-icon" class="fa-regular fa-flag text-gray-400"></i>
+                                    <span id="flag-text" class="hidden sm:inline">Flag</span>
+                                </button>
+                            </div>
+
+                            <!-- Optional Code / Reference Box -->
+                            <div id="question-code-box" class="hidden mb-6 p-4 rounded-xl bg-gray-900 text-gray-100 border border-gray-700 code-snippet text-sm overflow-x-auto">
+                                <pre id="question-code-content"></pre>
+                            </div>
+
+                            <!-- Answer Options Container -->
+                            <div id="options-container" class="space-y-3">
+                                <!-- Options injected dynamically -->
+                            </div>
+
+                            <!-- Instant Feedback Box (Shown when Instant Feedback mode is ON & answered) -->
+                            <div id="instant-feedback-box" class="hidden mt-6 p-4 rounded-xl border text-sm leading-relaxed">
+                                <div class="font-bold mb-1 flex items-center space-x-2" id="instant-feedback-title"></div>
+                                <p id="instant-feedback-explanation" class="text-gray-700 dark:text-gray-300"></p>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Navigation Controls -->
+                        <div class="mt-8 pt-5 border-t border-gray-200 dark:border-unity-border flex flex-wrap items-center justify-between gap-3">
+                            <button id="prev-btn" class="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-unity-border font-semibold text-sm hover:bg-gray-100 dark:hover:bg-unity-dark disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center space-x-2">
+                                <i class="fa-solid fa-chevron-left"></i>
+                                <span>Previous</span>
+                            </button>
+
+                            <div class="flex items-center space-x-3">
+                                <button id="next-btn" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm transition flex items-center space-x-2">
+                                    <span>Next</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                                <button id="submit-exam-btn" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm transition flex items-center space-x-2">
+                                    <i class="fa-solid fa-check-double"></i>
+                                    <span>Submit Exam</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Question Navigation Palette (4 cols on lg) -->
+                <div class="lg:col-span-4">
+                    <div class="bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-5 shadow-md sticky top-22">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400">Question Palette</h3>
+                            <span class="text-xs text-gray-500 dark:text-gray-400" id="flagged-count-badge">0 Flagged</span>
+                        </div>
+
+                        <!-- 50-Question Grid -->
+                        <div id="question-palette" class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 mb-5 max-h-[360px] overflow-y-auto pr-1">
+                            <!-- Number buttons injected dynamically -->
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="border-t border-gray-200 dark:border-unity-border pt-4 grid grid-cols-2 gap-2 text-xs text-gray-600 dark:text-gray-400">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3.5 h-3.5 rounded bg-blue-600 inline-block"></span>
+                                <span>Current</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3.5 h-3.5 rounded bg-emerald-600/20 border border-emerald-500 inline-block"></span>
+                                <span>Answered</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3.5 h-3.5 rounded bg-gray-100 dark:bg-unity-dark border border-gray-300 dark:border-unity-border inline-block"></span>
+                                <span>Unanswered</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3.5 h-3.5 rounded bg-amber-500/20 border border-amber-500 relative inline-block">
+                                    <span class="w-1.5 h-1.5 bg-amber-500 rounded-full absolute -top-0.5 -right-0.5"></span>
+                                </span>
+                                <span>Flagged</span>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Instant Feedback Toggle -->
+                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-unity-border flex md:hidden items-center justify-between">
+                            <span class="text-xs font-medium">Instant Feedback Mode</span>
+                            <input type="checkbox" id="mobile-feedback-toggle" class="w-4 h-4 accent-blue-600 rounded">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== 3. RESULTS & REVIEW SCREEN ==================== -->
+        <section id="results-screen" class="hidden max-w-5xl mx-auto">
+            <!-- Score Summary Card -->
+            <div class="bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-6 sm:p-10 shadow-xl mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left">
+                        <div id="pass-fail-badge" class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-3">
+                            <!-- Pass or Fail badge -->
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold mb-2">Exam Assessment Complete</h2>
+                        <p id="result-summary-text" class="text-gray-600 dark:text-gray-300 text-base max-w-xl">
+                            You have completed the Unity Certified Associate Game Developer practice assessment.
+                        </p>
+                    </div>
+
+                    <!-- Score Circle / Box -->
+                    <div class="bg-gray-50 dark:bg-unity-dark border-2 border-gray-200 dark:border-unity-border rounded-2xl p-6 text-center min-w-[210px] shadow-inner">
+                        <div class="text-xs uppercase font-bold tracking-wider text-gray-500 dark:text-gray-400 mb-1">Final Score</div>
+                        <div class="text-5xl font-black text-blue-500" id="final-score-value">0</div>
+                        <div class="text-sm font-semibold text-gray-500 dark:text-gray-400 mt-1">out of 1000 points</div>
+                        <div class="text-xs text-gray-400 mt-2 border-t border-gray-200 dark:border-unity-border pt-2">
+                            Passing Requirement: <span class="font-bold text-gray-700 dark:text-gray-200">700</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breakdown Stats -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-gray-200 dark:border-unity-border">
+                    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                        <div class="text-2xl font-bold text-emerald-500" id="stat-correct">0</div>
+                        <div class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mt-1">Correct (20 pts ea)</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                        <div class="text-2xl font-bold text-red-500" id="stat-incorrect">0</div>
+                        <div class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mt-1">Incorrect</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-500/10 border border-gray-500/20 text-center">
+                        <div class="text-2xl font-bold text-gray-500 dark:text-gray-300" id="stat-unanswered">0</div>
+                        <div class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mt-1">Unanswered</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-center">
+                        <div class="text-2xl font-bold text-blue-500" id="stat-percentage">0%</div>
+                        <div class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mt-1">Accuracy</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-8 flex flex-wrap items-center justify-center sm:justify-start gap-4">
+                    <button id="retake-same-btn" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Retake Exam</span>
+                    </button>
+                    <button id="retake-random-btn" class="px-6 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 dark:bg-unity-dark dark:hover:bg-gray-800 text-white border border-gray-600 dark:border-unity-border font-bold text-sm shadow-md transition flex items-center space-x-2">
+                        <i class="fa-solid fa-shuffle"></i>
+                        <span>Retake with Randomized Questions</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Review Section -->
+            <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <h3 class="text-2xl font-bold">Detailed Answer Review</h3>
+                
+                <!-- Filter Pills -->
+                <div class="inline-flex rounded-xl bg-white dark:bg-unity-panel p-1 border border-gray-200 dark:border-unity-border shadow-sm">
+                    <button class="review-filter-btn px-4 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white transition" data-filter="all">
+                        All (50)
+                    </button>
+                    <button class="review-filter-btn px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-unity-dark transition" data-filter="incorrect">
+                        Incorrect Only
+                    </button>
+                    <button class="review-filter-btn px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-unity-dark transition" data-filter="flagged">
+                        Flagged
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review List Container -->
+            <div id="review-list" class="space-y-6">
+                <!-- Detailed review cards injected dynamically -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Confirmation Modal (Replaces native confirm/alert) -->
+    <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-unity-panel border border-gray-200 dark:border-unity-border rounded-2xl max-w-md w-full p-6 shadow-2xl transform transition-all">
+            <div class="flex items-center space-x-3 text-amber-500 mb-3">
+                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white" id="modal-title">Submit Practice Exam?</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-6 leading-relaxed" id="modal-message">
+                Are you sure you want to submit your exam and view your final score?
+            </p>
+            <div class="flex items-center justify-end space-x-3">
+                <button id="modal-cancel-btn" class="px-4 py-2 rounded-xl border border-gray-300 dark:border-unity-border text-sm font-semibold hover:bg-gray-100 dark:hover:bg-unity-dark transition">
+                    Continue Exam
+                </button>
+                <button id="modal-confirm-btn" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md transition">
+                    Yes, Submit Exam
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic & 50-Question Bank -->
+    <script>
+        /**
+         * Comprehensive 50-Question Unity Certified Associate Practice Bank
+         * Each question awards 20 points (50 * 20 = 1000 points total).
+         */
+        const QUESTION_BANK = [
+            {
+                id: 1,
+                category: "Scene View Navigation",
+                question: "To orbit around the current pivot point in the Scene View Window, which action should you perform?",
+                options: [
+                    "Hold Option/Alt and click and drag the right mouse button",
+                    "Hold Command/Control and click and drag the left mouse button",
+                    "Hold Option/Alt and click and drag the left mouse button",
+                    "Press Q, then click and drag the mouse wheel"
+                ],
+                correctIndex: 2,
+                explanation: "In Unity's Scene View, holding Option (macOS) or Alt (Windows) while clicking and dragging the Left Mouse Button orbits the camera around the current pivot point. Holding Alt + Right Mouse Button zooms the view."
+            },
+            {
+                id: 2,
+                category: "Scene View Navigation",
+                question: "Which hotkey is used to frame and center the Scene View Window on a currently selected GameObject?",
+                options: [
+                    "F",
+                    "Shift + G",
+                    "Shift + V",
+                    "Z"
+                ],
+                correctIndex: 0,
+                explanation: "Pressing the 'F' key (Frame Selected) immediately centers the Scene View camera on the currently selected GameObject in the Hierarchy or Scene."
+            },
+            {
+                id: 3,
+                category: "Hierarchy & Scene Management",
+                question: "How do you parent one GameObject to another inside the Hierarchy Window?",
+                options: [
+                    "Press Shift + Up Arrow while the child object is selected",
+                    "Click and drag the child GameObject directly onto the parent GameObject",
+                    "Right-click the child GameObject and select Set Parent",
+                    "Select both GameObjects and press Ctrl/Cmd + P"
+                ],
+                correctIndex: 1,
+                explanation: "In the Hierarchy Window, dragging one GameObject onto another establishes a parent-child relationship, causing the child's Transform to become relative to the parent."
+            },
+            {
+                id: 4,
+                category: "Physics & Components",
+                question: "A GameObject can receive physical forces and torque when which component is applied?",
+                options: [
+                    "Animator",
+                    "Rigidbody",
+                    "Constant Force",
+                    "Sphere Collider"
+                ],
+                correctIndex: 1,
+                explanation: "The Rigidbody component places a GameObject under the control of Unity's physics engine, allowing it to react to gravity, forces, and torque."
+            },
+            {
+                id: 5,
+                category: "Physics & Components",
+                question: "Which Rigidbody property controls the amount of air resistance affecting a GameObject when moving under forces?",
+                options: [
+                    "Mass",
+                    "Angular Drag",
+                    "Drag",
+                    "Interpolate"
+                ],
+                correctIndex: 2,
+                explanation: "Drag simulates air resistance (linear damping) affecting positional movement, whereas Angular Drag affects rotational slowdown."
+            },
+            {
+                id: 6,
+                category: "Physics & Components",
+                question: "Which Rigidbody property is used to smooth out visual jittering by estimating the Transform position based on the previous frame's Transform?",
+                options: [
+                    "Collision Detection",
+                    "Interpolate",
+                    "Is Kinematic",
+                    "Freeze Position"
+                ],
+                correctIndex: 1,
+                explanation: "Setting Interpolate on a Rigidbody smooths out movement between fixed physics timesteps by interpolating based on the previous frame's Transform."
+            },
+            {
+                id: 7,
+                category: "Physics & Components",
+                question: "To add a Box Collider to a selected GameObject using the top menu bar, which menu path should you choose?",
+                options: [
+                    "Objects > Physics > Box Collider",
+                    "Assets > Create > Colliders > Box",
+                    "Component > Physics > Box Collider",
+                    "Physics > Collisions > Box"
+                ],
+                correctIndex: 2,
+                explanation: "All built-in components are organized under the top 'Component' menu. A 3D Box Collider is located under Component > Physics > Box Collider."
+            },
+            {
+                id: 8,
+                category: "Materials & Shaders",
+                question: "Which Standard Shader property modifies apparent surface detail (such as bumps, grooves, and scratches) without adding extra polygons to the mesh?",
+                options: [
+                    "Albedo",
+                    "Normal Map",
+                    "Occlusion",
+                    "Metallic"
+                ],
+                correctIndex: 1,
+                explanation: "A Normal Map uses RGB directional data to alter how light bounces off a surface, creating the illusion of high-resolution geometric detail on low-poly meshes."
+            },
+            {
+                id: 9,
+                category: "Materials & Shaders",
+                question: "Which Standard Shader property causes a surface to appear self-illuminated based on RGB color values?",
+                options: [
+                    "Smoothness",
+                    "Specular Highlights",
+                    "Emission",
+                    "Detail Mask"
+                ],
+                correctIndex: 2,
+                explanation: "The Emission property controls the color and intensity of light emitted directly from the surface of a material, making it glow."
+            },
+            {
+                id: 10,
+                category: "Materials & Shaders",
+                question: "In the Standard Shader, increasing the Metallic value of a material has what visual effect?",
+                options: [
+                    "It makes the material transparent and refractive",
+                    "It increases environmental reflections and reduces the influence of the base Albedo color",
+                    "It disables all specular highlights on the mesh",
+                    "It converts the material into a wireframe overlay"
+                ],
+                correctIndex: 1,
+                explanation: "Higher Metallic values make a surface behave like metal—reflecting surrounding light and environment cubemaps strongly while tinting reflections with the Albedo color."
+            },
+            {
+                id: 11,
+                category: "Materials & Rendering Modes",
+                question: "Which Rendering Mode in Unity's Standard Shader is best suited for solid, non-see-through materials like brick and stone?",
+                options: [
+                    "Opaque",
+                    "Cutout",
+                    "Fade",
+                    "Transparent"
+                ],
+                correctIndex: 0,
+                explanation: "Opaque is the default rendering mode for solid objects with no transparent areas, offering optimal rendering performance."
+            },
+            {
+                id: 12,
+                category: "Materials & Rendering Modes",
+                question: "Which Rendering Mode is best suited for materials like clear plastic, acrylic, or frosted glass where specular reflections remain visible even when alpha is low?",
+                options: [
+                    "Opaque",
+                    "Cutout",
+                    "Fade",
+                    "Transparent"
+                ],
+                correctIndex: 3,
+                explanation: "Transparent mode preserves physically realistic specular highlights and reflections across transparent surfaces like glass and acrylic."
+            },
+            {
+                id: 13,
+                category: "Materials & Rendering Modes",
+                question: "Which Rendering Mode is ideal for a wire fence or foliage texture where pixels must be either 100% solid or 100% invisible with hard edges?",
+                options: [
+                    "Opaque",
+                    "Cutout",
+                    "Fade",
+                    "Transparent"
+                ],
+                correctIndex: 1,
+                explanation: "Cutout uses an Alpha Cutoff threshold to render pixels as either completely opaque or completely discarded, making it ideal for chain-link fences and leaves."
+            },
+            {
+                id: 14,
+                category: "Materials & Rendering Modes",
+                question: "Which Rendering Mode allows an object—such as a hologram or ghost—to completely fade out, including its specular highlights and reflections?",
+                options: [
+                    "Opaque",
+                    "Cutout",
+                    "Fade",
+                    "Subtractive"
+                ],
+                correctIndex: 2,
+                explanation: "Unlike Transparent mode, Fade allows the alpha value to fade out the entire object uniformly, including specular highlights, making it ideal for holograms."
+            },
+            {
+                id: 15,
+                category: "C# Scripting",
+                question: "Finish the following code snippet to reference the world position of the GameObject to which the script is attached:",
+                code: "void Update() {\n    Vector3 currentPos = ______________;\n}",
+                options: [
+                    "Vector3 (position)",
+                    "transform.position",
+                    "gameObject.position",
+                    "transform.parent.position"
+                ],
+                correctIndex: 1,
+                explanation: "Every MonoBehaviour script has a built-in shortcut property 'transform' referencing the GameObject's Transform component, and 'transform.position' retrieves its world-space Vector3 position."
+            },
+            {
+                id: 16,
+                category: "Animation & Animator",
+                question: "What is the role of the 'Any State' node in an Animator Controller?",
+                options: [
+                    "A state that applies its animation behaviors simultaneously to all states",
+                    "A limitless state accessible only by Boolean parameters",
+                    "A special state that allows transitions to a target state regardless of which state is currently playing",
+                    "An idle fallback animation that counterbalances blended animations"
+                ],
+                correctIndex: 2,
+                explanation: "'Any State' lets you trigger a transition to a specific animation (such as Death, Hit Reaction, or Jump) from any active state in the state machine without wiring individual transitions from every state."
+            },
+            {
+                id: 17,
+                category: "Audio Systems",
+                question: "To play an Audio Clip and modify its volume or pitch within a scene, the clip must be assigned to:",
+                options: [
+                    "The amplitude property of an Audio Mixer",
+                    "An Audio Clip Modifier asset",
+                    "An Audio Source component",
+                    "A Sound Properties component"
+                ],
+                correctIndex: 2,
+                explanation: "An AudioClip is only an audio data asset. To play it in 3D/2D space and control its Volume, Pitch, or Loop settings, it must be attached to an Audio Source component."
+            },
+            {
+                id: 18,
+                category: "Game Design & Industry",
+                question: "Score accumulation, attacking enemies, and managing player health are examples of:",
+                options: [
+                    "Game narrative",
+                    "Physics implementation",
+                    "Audio implementation",
+                    "Game mechanics"
+                ],
+                correctIndex: 3,
+                explanation: "Game mechanics are the core rules, systems, and interactive loops (such as scoring, combat, and health) that define how a player interacts with the game."
+            },
+            {
+                id: 19,
+                category: "Lighting & Illumination",
+                question: "Changing the Intensity property of a Light component directly adjusts its:",
+                options: [
+                    "Brightness",
+                    "Photometric web",
+                    "Color temperature",
+                    "Shadow resolution"
+                ],
+                correctIndex: 0,
+                explanation: "The Intensity property controls the overall brightness of the light source emitted into the scene."
+            },
+            {
+                id: 20,
+                category: "Asset Management",
+                question: "Which 3D file format is the industry standard for importing complex models containing skeletal rigs, skin weights, and animations into Unity?",
+                options: [
+                    ".obj",
+                    ".fbx",
+                    ".stl",
+                    ".svg"
+                ],
+                correctIndex: 1,
+                explanation: "Autodesk FBX (.fbx) supports meshes, materials, UVs, skeletal armatures, and animation clips in a single file, making it Unity's preferred 3D interchange format."
+            },
+            {
+                id: 21,
+                category: "Industry Standards",
+                question: "What is the primary purpose of a Non-Disclosure Agreement (NDA) in game development?",
+                options: [
+                    "To grant open-source distribution rights to players",
+                    "To legally protect confidential studio information, unreleased game concepts, and proprietary tech",
+                    "To certify that an asset is free of copyright restrictions",
+                    "To register a game's trademark with digital storefronts"
+                ],
+                correctIndex: 1,
+                explanation: "An NDA is a legally binding contract preventing team members, contractors, or playtesters from leaking unannounced projects, source code, or trade secrets."
+            },
+            {
+                id: 22,
+                category: "Prefabs & Workflows",
+                question: "What is the primary benefit of converting a configured GameObject into a Prefab?",
+                options: [
+                    "It automatically bakes lightmaps onto the GameObject",
+                    "It creates a reusable template asset where changes to the Prefab can propagate to all instances across scenes",
+                    "It converts the GameObject into static geometry that cannot move",
+                    "It compresses all attached C# scripts into binary machine code"
+                ],
+                correctIndex: 1,
+                explanation: "Prefabs act as reusable blueprints. Modifying the Prefab Asset updates all linked instances across your project while still allowing per-instance overrides."
+            },
+            {
+                id: 23,
+                category: "C# Scripting",
+                question: "Which MonoBehaviour lifecycle method is called at fixed time intervals and is recommended for applying physics forces to a Rigidbody?",
+                options: [
+                    "Update()",
+                    "LateUpdate()",
+                    "FixedUpdate()",
+                    "Awake()"
+                ],
+                correctIndex: 2,
+                explanation: "FixedUpdate() runs on a deterministic, fixed timestep independent of frame rate, making it the standard place for Rigidbody physics calculations."
+            },
+            {
+                id: 24,
+                category: "C# Scripting",
+                question: "Which MonoBehaviour method is executed before Start() and is commonly used to initialize internal component references?",
+                options: [
+                    "OnEnable()",
+                    "Awake()",
+                    "Update()",
+                    "OnDestroy()"
+                ],
+                correctIndex: 1,
+                explanation: "Awake() is called when the script instance is being loaded, guaranteed to run before any Start() methods are executed across all scripts."
+            },
+            {
+                id: 25,
+                category: "Physics & Colliders",
+                question: "What happens when the 'Is Trigger' checkbox is enabled on a Collider component?",
+                options: [
+                    "The GameObject becomes completely invisible to the Main Camera",
+                    "Other colliders pass through it without physical collision response, firing OnTrigger events instead",
+                    "The Rigidbody mass is automatically set to zero",
+                    "The collider switches from 3D physics to 2D physics"
+                ],
+                correctIndex: 1,
+                explanation: "Trigger colliders detect overlap without blocking movement, invoking OnTriggerEnter, OnTriggerStay, and OnTriggerExit in attached scripts."
+            },
+            {
+                id: 26,
+                category: "Physics & Colliders",
+                question: "For two GameObjects to register a standard physical collision event (OnCollisionEnter), what is the minimum component requirement?",
+                options: [
+                    "Both must have a Mesh Renderer component",
+                    "Both must have a Collider component, and at least one must have a non-kinematic Rigidbody",
+                    "Both must have a Rigidbody with Is Kinematic enabled",
+                    "Both must be tagged as 'Player'"
+                ],
+                correctIndex: 1,
+                explanation: "Unity's physics engine requires both objects to have Colliders and at least one of them to possess an active, non-kinematic Rigidbody to compute physical collisions."
+            },
+            {
+                id: 27,
+                category: "User Interface (UI)",
+                question: "Every Unity UI element (such as Text, Image, or Button) must be a child of which component in order to render properly?",
+                options: [
+                    "EventSystem",
+                    "Canvas",
+                    "Camera",
+                    "Layout Group"
+                ],
+                correctIndex: 1,
+                explanation: "All Unity UI elements must reside inside a hierarchy beneath a GameObject with a Canvas component, which handles UI layout and rendering."
+            },
+            {
+                id: 28,
+                category: "User Interface (UI)",
+                question: "Which Canvas Render Mode scales and positions UI elements directly on top of the screen regardless of camera position or perspective?",
+                options: [
+                    "World Space",
+                    "Screen Space - Camera",
+                    "Screen Space - Overlay",
+                    "Viewport - Isometric"
+                ],
+                correctIndex: 2,
+                explanation: "Screen Space - Overlay renders UI directly over the final scene output on screen without needing a reference camera."
+            },
+            {
+                id: 29,
+                category: "Lighting & Illumination",
+                question: "Which type of Light emits parallel rays in a single direction infinitely across the entire scene, simulating sunlight?",
+                options: [
+                    "Point Light",
+                    "Spot Light",
+                    "Directional Light",
+                    "Area Light"
+                ],
+                correctIndex: 2,
+                explanation: "A Directional Light has no identifiable source position; its rotation determines the angle of parallel light rays affecting all objects equally, ideal for outdoor sunlight."
+            },
+            {
+                id: 30,
+                category: "Lighting & Illumination",
+                question: "Which Light Mode pre-calculates lighting and shadows into lightmap textures in the Editor and performs zero real-time lighting calculations at runtime?",
+                options: [
+                    "Realtime",
+                    "Mixed",
+                    "Baked",
+                    "Dynamic"
+                ],
+                correctIndex: 2,
+                explanation: "Baked lights compute global illumination and shadows offline into lightmaps, significantly improving runtime performance for static environments."
+            },
+            {
+                id: 31,
+                category: "C# Scripting",
+                question: "How do you expose a private variable in the Unity Inspector without making it publicly accessible to other C# classes?",
+                options: [
+                    "Add the [HideInInspector] attribute above the variable",
+                    "Add the [SerializeField] attribute above the private variable",
+                    "Declare the variable using the 'static' keyword",
+                    "Declare the variable using the 'const' keyword"
+                ],
+                correctIndex: 1,
+                explanation: "The [SerializeField] attribute instructs Unity to serialize a private field so designers can edit its value in the Inspector while maintaining proper C# encapsulation."
+            },
+            {
+                id: 32,
+                category: "C# Scripting",
+                question: "Which method is used to multiply movement speed so that an object moves at a consistent rate per second regardless of frame rate?",
+                options: [
+                    "Time.frameCount",
+                    "Time.deltaTime",
+                    "Time.timeScale",
+                    "Time.realtimeSinceStartup"
+                ],
+                correctIndex: 1,
+                explanation: "Time.deltaTime returns the completion time in seconds since the last frame, ensuring frame-rate independent movement when multiplied with velocity."
+            },
+            {
+                id: 33,
+                category: "Animation & Animator",
+                question: "In an Animator Controller, what triggers a transition from one state to another when invoked via code using Animator.SetTrigger()?",
+                options: [
+                    "Float Parameter",
+                    "Int Parameter",
+                    "Bool Parameter",
+                    "Trigger Parameter"
+                ],
+                correctIndex: 3,
+                explanation: "A Trigger parameter acts like a Boolean that automatically resets itself to false as soon as the Animator consumes it to execute a transition."
+            },
+            {
+                id: 34,
+                category: "Animation & Animator",
+                question: "If an animation transition feels sluggish and waits for the current animation clip to finish playing before switching, which setting on the transition should you uncheck?",
+                options: [
+                    "Fixed Duration",
+                    "Has Exit Time",
+                    "Can Transition To Self",
+                    "Write Defaults"
+                ],
+                correctIndex: 1,
+                explanation: "When 'Has Exit Time' is enabled, the Animator waits until a specific normalized time of the current clip finishes before transitioning. Unchecking it allows immediate transitions."
+            },
+            {
+                id: 35,
+                category: "Editor Interface",
+                question: "Which Unity Editor window displays the folder structure and all imported assets (scripts, textures, audio, prefabs) stored inside your project's Assets folder?",
+                options: [
+                    "Hierarchy Window",
+                    "Inspector Window",
+                    "Project Window",
+                    "Console Window"
+                ],
+                correctIndex: 2,
+                explanation: "The Project Window mirrors the files and folders stored on disk inside the project's Assets directory."
+            },
+            {
+                id: 36,
+                category: "Editor Interface",
+                question: "Which toolbar transform tool corresponds to the 'W', 'E', and 'R' hotkeys respectively?",
+                options: [
+                    "Rotate, Scale, Move",
+                    "Move, Rotate, Scale",
+                    "Rect, Move, Rotate",
+                    "Hand, Move, Scale"
+                ],
+                correctIndex: 1,
+                explanation: "Unity's standard QWERTY transform shortcuts are: Q (Hand/View), W (Move), E (Rotate), R (Scale), T (Rect Tool), and Y (Transform)."
+            },
+            {
+                id: 37,
+                category: "Engine Math",
+                question: "How does Unity internally represent and calculate 3D rotations to prevent Gimbal Lock?",
+                options: [
+                    "Euler Vectors",
+                    "Quaternions",
+                    "2D Matrices",
+                    "Radians"
+                ],
+                correctIndex: 1,
+                explanation: "While the Inspector displays rotations as user-friendly Euler angles (X, Y, Z), Unity stores and interpolates rotations internally using four-component Quaternions."
+            },
+            {
+                id: 38,
+                category: "C# Scripting",
+                question: "Which built-in Unity method is used to spawn a copy of a Prefab into the active scene at runtime?",
+                options: [
+                    "GameObject.CreatePrimitive()",
+                    "Instantiate()",
+                    "AddComponent()",
+                    "Resources.UnloadAsset()"
+                ],
+                correctIndex: 1,
+                explanation: "Object.Instantiate() clones an existing Object or Prefab and places the new instance into the scene at a specified position and rotation."
+            },
+            {
+                id: 39,
+                category: "C# Scripting",
+                question: "Which method removes a GameObject, component, or asset from the scene at runtime?",
+                options: [
+                    "Remove()",
+                    "Destroy()",
+                    "Delete()",
+                    "Clear()"
+                ],
+                correctIndex: 1,
+                explanation: "Object.Destroy(gameObject) safely destroys a GameObject or component at the end of the current frame update loop."
+            },
+            {
+                id: 40,
+                category: "Audio Systems",
+                question: "Which component must be present on the Main Camera (or player character) in order for the player to hear audio played by Audio Sources in the scene?",
+                options: [
+                    "Audio Reverb Zone",
+                    "Audio Listener",
+                    "Audio Mixer Group",
+                    "Audio High Pass Filter"
+                ],
+                correctIndex: 1,
+                explanation: "The Audio Listener acts as the virtual 'ears' of the player in the scene. Unity automatically attaches one to the Main Camera by default."
+            },
+            {
+                id: 41,
+                category: "Cameras & Rendering",
+                question: "On a Camera component, what does the 'Clear Flags' property set to 'Skybox' do?",
+                options: [
+                    "Fills empty background space with a solid flat color",
+                    "Renders the assigned Skybox material in all empty areas behind scene geometry",
+                    "Prevents the camera from clearing depth buffers between frames",
+                    "Renders only UI elements and hides 3D objects"
+                ],
+                correctIndex: 1,
+                explanation: "Setting Clear Flags to Skybox fills any screen pixels not covered by scene geometry with the configured environmental Skybox."
+            },
+            {
+                id: 42,
+                category: "Cameras & Rendering",
+                question: "Which Camera projection mode renders objects at the exact same size regardless of their distance from the camera, commonly used in 2D and isometric games?",
+                options: [
+                    "Perspective",
+                    "Orthographic",
+                    "Frustum",
+                    "Stereoscopic"
+                ],
+                correctIndex: 1,
+                explanation: "Orthographic projection removes perspective foreshortening, making it ideal for 2D games, isometric strategy views, and CAD-style layouts."
+            },
+            {
+                id: 43,
+                category: "Physics & Materials",
+                question: "What asset type do you assign to a Collider's 'Material' slot to make a ball bounce higher or make a floor feel like slippery ice?",
+                options: [
+                    "Standard Material",
+                    "Physic Material",
+                    "Shader Graph",
+                    "Terrain Layer"
+                ],
+                correctIndex: 1,
+                explanation: "A Physic Material defines surface friction (Dynamic and Static Friction) and Bounciness properties for Colliders."
+            },
+            {
+                id: 44,
+                category: "Navigation & AI",
+                question: "Which Unity system allows AI characters to automatically calculate paths around obstacles and traverse walkable surfaces?",
+                options: [
+                    "Particle System",
+                    "NavMesh (Navigation Mesh)",
+                    "Occlusion Culling",
+                    "Sprite Atlas"
+                ],
+                correctIndex: 1,
+                explanation: "Unity's Navigation system bakes walkable areas into a NavMesh and uses NavMeshAgent components to steer AI characters around obstacles."
+            },
+            {
+                id: 45,
+                category: "Optimization & Rendering",
+                question: "What is the purpose of Occlusion Culling in Unity?",
+                options: [
+                    "To disable rendering of GameObjects that are completely hidden behind other opaque objects from the camera's view",
+                    "To reduce the resolution of audio clips played far away",
+                    "To merge multiple C# scripts into one file",
+                    "To lower the polygon count of distant terrain automatically"
+                ],
+                correctIndex: 0,
+                explanation: "Occlusion Culling improves rendering performance by preventing Unity from drawing objects that are obscured behind walls or other solid occluders."
+            },
+            {
+                id: 46,
+                category: "Tags & Layers",
+                question: "What is the primary use of assigning a 'Tag' (such as 'Player' or 'Enemy') to a GameObject?",
+                options: [
+                    "To exclude the GameObject from Directional Light shadows",
+                    "To quickly identify and reference specific GameObjects in C# scripts using CompareTag() or FindWithTag()",
+                    "To lock the GameObject's Transform in the Scene View",
+                    "To assign a Physics Layer collision matrix"
+                ],
+                correctIndex: 1,
+                explanation: "Tags serve as string identifiers allowing scripts (such as collision triggers) to verify what type of object they interacted with via other.CompareTag(\"Player\")."
+            },
+            {
+                id: 47,
+                category: "Tags & Layers",
+                question: "Which feature uses 'Layers' rather than 'Tags'?",
+                options: [
+                    "Calling GameObject.CompareTag() in OnTriggerEnter",
+                    "Filtering which objects a Camera renders (Culling Mask) or configuring the Physics Layer Collision Matrix",
+                    "Grouping scripts inside the Project Window",
+                    "Naming animation clips in the Animator"
+                ],
+                correctIndex: 1,
+                explanation: "Layers are bitmask-based categories used by Cameras (Culling Masks), Raycasts (LayerMasks), Lights, and the Physics Collision Matrix."
+            },
+            {
+                id: 48,
+                category: "Visual Effects",
+                question: "Which Unity component is used to generate dynamic visual effects such as fire, smoke, sparks, rain, and magic spells using thousands of small 2D sprites or meshes?",
+                options: [
+                    "Trail Renderer",
+                    "Particle System",
+                    "Line Renderer",
+                    "Decal Projector"
+                ],
+                correctIndex: 1,
+                explanation: "The Particle System simulates and renders large numbers of small particles over time to create dynamic environmental and gameplay effects."
+            },
+            {
+                id: 49,
+                category: "Build & Deployment",
+                question: "Before building a standalone executable of your game, where must you add your scenes so they are included in the final build?",
+                options: [
+                    "Project Settings > Quality",
+                    "File > Build Settings > Scenes In Build list",
+                    "Window > Package Manager",
+                    "Edit > Preferences > External Tools"
+                ],
+                correctIndex: 1,
+                explanation: "Only scenes added and checked inside the 'Scenes In Build' list in File > Build Settings are compiled into the final application."
+            },
+            {
+                id: 50,
+                category: "Inspector & UI Controls",
+                question: "In the Unity Inspector, clicking the three vertical dots (Kebab menu) in the top-right corner of a component allows you to:",
+                options: [
+                    "Export the entire project as a WebGL build",
+                    "Reset component values, copy/paste component values, or remove the component",
+                    "Bake lighting for the active scene",
+                    "Switch the Editor between Dark and Light themes"
+                ],
+                correctIndex: 1,
+                explanation: "The component context menu (three vertical dots / gear icon) provides quick actions to Reset, Copy Component, Paste Component Values, Move Up/Down, or Remove Component."
+            }
+        ];
+
+        // ==================== APPLICATION STATE ====================
+        let activeQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // { questionIndex: selectedOptionIndex }
+        let flaggedQuestions = new Set();
+        let isInstantFeedback = false;
+        let timerInterval = null;
+        let secondsRemaining = 50 * 60; // 50 minutes
+        let currentReviewFilter = 'all';
+
+        // ==================== DOM ELEMENTS ====================
+        const startScreen = document.getElementById('start-screen');
+        const examScreen = document.getElementById('exam-screen');
+        const resultsScreen = document.getElementById('results-screen');
+
+        const timerContainer = document.getElementById('timer-container');
+        const timerDisplay = document.getElementById('timer-display');
+        const feedbackToggleContainer = document.getElementById('feedback-toggle-container');
+        const instantFeedbackToggle = document.getElementById('instant-feedback-toggle');
+        const mobileFeedbackToggle = document.getElementById('mobile-feedback-toggle');
+
+        const startRandomizeToggle = document.getElementById('start-randomize-toggle');
+        const startFeedbackToggle = document.getElementById('start-feedback-toggle');
+        const startExamBtn = document.getElementById('start-exam-btn');
+
+        const questionCounter = document.getElementById('question-counter');
+        const questionCategory = document.getElementById('question-category');
+        const answeredCounter = document.getElementById('answered-counter');
+        const progressBar = document.getElementById('progress-bar');
+
+        const questionText = document.getElementById('question-text');
+        const questionCodeBox = document.getElementById('question-code-box');
+        const questionCodeContent = document.getElementById('question-code-content');
+        const optionsContainer = document.getElementById('options-container');
+
+        const instantFeedbackBox = document.getElementById('instant-feedback-box');
+        const instantFeedbackTitle = document.getElementById('instant-feedback-title');
+        const instantFeedbackExplanation = document.getElementById('instant-feedback-explanation');
+
+        const flagBtn = document.getElementById('flag-btn');
+        const flagIcon = document.getElementById('flag-icon');
+        const flagText = document.getElementById('flag-text');
+        const flaggedCountBadge = document.getElementById('flagged-count-badge');
+
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitExamBtn = document.getElementById('submit-exam-btn');
+        const questionPalette = document.getElementById('question-palette');
+
+        // Modal Elements
+        const confirmModal = document.getElementById('confirm-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+        // ==================== THEME TOGGLE ====================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            const htmlEl = document.documentElement;
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-moon text-gray-700';
+            } else {
+                htmlEl.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-sun text-amber-400';
+            }
+        });
+
+        // ==================== HELPER FUNCTIONS ====================
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function prepareQuestions(randomize) {
+            let cloned = QUESTION_BANK.map(q => ({
+                ...q,
+                options: [...q.options]
+            }));
+
+            if (randomize) {
+                cloned = shuffleArray(cloned);
+                // Also shuffle options while preserving correctIndex
+                cloned = cloned.map(q => {
+                    const correctText = q.options[q.correctIndex];
+                    const shuffledOptions = shuffleArray(q.options);
+                    return {
+                        ...q,
+                        options: shuffledOptions,
+                        correctIndex: shuffledOptions.indexOf(correctText)
+                    };
+                });
+            }
+            return cloned;
+        }
+
+        // ==================== TIMER LOGIC ====================
+        function startTimer() {
+            clearInterval(timerInterval);
+            secondsRemaining = 50 * 60;
+            updateTimerUI();
+
+            timerInterval = setInterval(() => {
+                secondsRemaining--;
+                updateTimerUI();
+
+                if (secondsRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const mins = Math.floor(secondsRemaining / 60);
+            const secs = secondsRemaining % 60;
+            timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            if (secondsRemaining <= 300) {
+                timerContainer.classList.add('border-red-500', 'text-red-500');
+            } else {
+                timerContainer.classList.remove('border-red-500', 'text-red-500');
+            }
+        }
+
+        // ==================== EXAM INITIALIZATION ====================
+        function startExam(randomize = false) {
+            activeQuestions = prepareQuestions(randomize);
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            flaggedQuestions.clear();
+
+            isInstantFeedback = startFeedbackToggle.checked;
+            instantFeedbackToggle.checked = isInstantFeedback;
+            mobileFeedbackToggle.checked = isInstantFeedback;
+
+            // Switch Views
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            examScreen.classList.remove('hidden');
+
+            timerContainer.classList.remove('hidden');
+            timerContainer.classList.add('flex');
+            feedbackToggleContainer.classList.remove('hidden');
+            feedbackToggleContainer.classList.add('md:flex');
+
+            buildPalette();
+            renderQuestion();
+            startTimer();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== RENDERING QUESTION & PALETTE ====================
+        function buildPalette() {
+            questionPalette.innerHTML = '';
+            activeQuestions.forEach((_, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = idx + 1;
+                btn.dataset.index = idx;
+                btn.className = 'palette-btn relative h-9 rounded-lg text-xs font-bold border transition flex items-center justify-center';
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = idx;
+                    renderQuestion();
+                });
+                questionPalette.appendChild(btn);
+            });
+            updatePaletteStyles();
+        }
+
+        function updatePaletteStyles() {
+            const buttons = questionPalette.querySelectorAll('.palette-btn');
+            buttons.forEach((btn, idx) => {
+                const isCurrent = idx === currentQuestionIndex;
+                const isAnswered = userAnswers.hasOwnProperty(idx);
+                const isFlagged = flaggedQuestions.has(idx);
+
+                // Reset classes
+                btn.className = 'palette-btn relative h-9 rounded-lg text-xs font-bold border transition flex items-center justify-center ';
+
+                if (isCurrent) {
+                    btn.className += 'bg-blue-600 text-white border-blue-500 ring-2 ring-blue-400/40';
+                } else if (isAnswered) {
+                    if (isInstantFeedback) {
+                        const isCorrect = userAnswers[idx] === activeQuestions[idx].correctIndex;
+                        btn.className += isCorrect
+                            ? 'bg-emerald-500/20 text-emerald-500 border-emerald-500/50'
+                            : 'bg-red-500/20 text-red-500 border-red-500/50';
+                    } else {
+                        btn.className += 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/40';
+                    }
+                } else {
+                    btn.className += 'bg-gray-100 dark:bg-unity-dark text-gray-700 dark:text-gray-300 border-gray-300 dark:border-unity-border hover:border-blue-500';
+                }
+
+                // Flag indicator dot
+                const existingDot = btn.querySelector('.flag-dot');
+                if (existingDot) existingDot.remove();
+
+                if (isFlagged) {
+                    const dot = document.createElement('span');
+                    dot.className = 'flag-dot w-2 h-2 rounded-full bg-amber-500 absolute -top-1 -right-1 shadow';
+                    btn.appendChild(dot);
+                }
+            });
+
+            // Update Counters
+            const answeredCount = Object.keys(userAnswers).length;
+            answeredCounter.textContent = `${answeredCount} / ${activeQuestions.length} Answered`;
+            flaggedCountBadge.textContent = `${flaggedQuestions.size} Flagged`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / activeQuestions.length) * 100}%`;
+        }
+
+        function renderQuestion() {
+            const q = activeQuestions[currentQuestionIndex];
+            const selectedOption = userAnswers[currentQuestionIndex];
+            const hasAnswered = selectedOption !== undefined;
+
+            // Header Info
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${activeQuestions.length}`;
+            questionCategory.textContent = q.category;
+            questionText.textContent = `${currentQuestionIndex + 1}. ${q.question}`;
+
+            // Optional Code Block
+            if (q.code) {
+                questionCodeBox.classList.remove('hidden');
+                questionCodeContent.textContent = q.code;
+            } else {
+                questionCodeBox.classList.add('hidden');
+            }
+
+            // Flag Button State
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flagIcon.className = 'fa-solid fa-flag text-amber-500';
+                flagBtn.classList.add('border-amber-500', 'bg-amber-500/10');
+                flagText.textContent = 'Flagged';
+            } else {
+                flagIcon.className = 'fa-regular fa-flag text-gray-400';
+                flagBtn.classList.remove('border-amber-500', 'bg-amber-500/10');
+                flagText.textContent = 'Flag';
+            }
+
+            // Render Options
+            const letters = ['A', 'B', 'C', 'D'];
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = selectedOption === optIdx;
+                const isCorrect = optIdx === q.correctIndex;
+
+                const optionBtn = document.createElement('button');
+                optionBtn.type = 'button';
+
+                let cardStyle = 'w-full text-left p-4 rounded-xl border-2 transition flex items-start space-x-3.5 ';
+
+                if (isInstantFeedback && hasAnswered) {
+                    if (isCorrect) {
+                        cardStyle += 'border-emerald-500 bg-emerald-500/10 text-gray-900 dark:text-white';
+                    } else if (isSelected && !isCorrect) {
+                        cardStyle += 'border-red-500 bg-red-500/10 text-gray-900 dark:text-white';
+                    } else {
+                        cardStyle += 'border-gray-200 dark:border-unity-border opacity-60';
+                    }
+                } else if (isSelected) {
+                    cardStyle += 'border-blue-600 bg-blue-600/10 text-gray-900 dark:text-white shadow-sm';
+                } else {
+                    cardStyle += 'border-gray-200 dark:border-unity-border hover:border-blue-500/60 hover:bg-gray-50 dark:hover:bg-unity-dark/70';
+                }
+
+                optionBtn.className = cardStyle;
+
+                // Letter Badge
+                let badgeStyle = 'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ';
+                if (isInstantFeedback && hasAnswered) {
+                    if (isCorrect) badgeStyle += 'bg-emerald-500 text-white';
+                    else if (isSelected) badgeStyle += 'bg-red-500 text-white';
+                    else badgeStyle += 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300';
+                } else if (isSelected) {
+                    badgeStyle += 'bg-blue-600 text-white';
+                } else {
+                    badgeStyle += 'bg-gray-200 dark:bg-unity-dark text-gray-700 dark:text-gray-300';
+                }
+
+                optionBtn.innerHTML = `
+                    <span class="${badgeStyle}">${letters[optIdx]}</span>
+                    <span class="text-sm sm:text-base font-medium leading-snug flex-grow">${optText}</span>
+                `;
+
+                // Status Icon in Instant Feedback Mode
+                if (isInstantFeedback && hasAnswered) {
+                    if (isCorrect) {
+                        optionBtn.innerHTML += `<i class="fa-solid fa-circle-check text-emerald-500 text-lg mt-0.5"></i>`;
+                    } else if (isSelected) {
+                        optionBtn.innerHTML += `<i class="fa-solid fa-circle-xmark text-red-500 text-lg mt-0.5"></i>`;
+                    }
+                }
+
+                optionBtn.addEventListener('click', () => {
+                    userAnswers[currentQuestionIndex] = optIdx;
+                    renderQuestion();
+                });
+
+                optionsContainer.appendChild(optionBtn);
+            });
+
+            // Instant Feedback Box
+            if (isInstantFeedback && hasAnswered) {
+                const isUserCorrect = selectedOption === q.correctIndex;
+                instantFeedbackBox.classList.remove('hidden', 'border-emerald-500', 'bg-emerald-500/10', 'border-red-500', 'bg-red-500/10');
+                
+                if (isUserCorrect) {
+                    instantFeedbackBox.classList.add('border-emerald-500', 'bg-emerald-500/10');
+                    instantFeedbackTitle.innerHTML = `<i class="fa-solid fa-check-circle text-emerald-500"></i> <span class="text-emerald-600 dark:text-emerald-400">Correct! (+20 Points)</span>`;
+                } else {
+                    instantFeedbackBox.classList.add('border-red-500', 'bg-red-500/10');
+                    instantFeedbackTitle.innerHTML = `<i class="fa-solid fa-times-circle text-red-500"></i> <span class="text-red-600 dark:text-red-400">Incorrect — Correct Answer: ${letters[q.correctIndex]}</span>`;
+                }
+                instantFeedbackExplanation.textContent = q.explanation;
+            } else {
+                instantFeedbackBox.classList.add('hidden');
+            }
+
+            // Navigation Button States
+            prevBtn.disabled = currentQuestionIndex === 0;
+            if (currentQuestionIndex === activeQuestions.length - 1) {
+                nextBtn.classList.add('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+            }
+
+            updatePaletteStyles();
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        startExamBtn.addEventListener('click', () => {
+            startExam(startRandomizeToggle.checked);
+        });
+
+        flagBtn.addEventListener('click', () => {
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flaggedQuestions.delete(currentQuestionIndex);
+            } else {
+                flaggedQuestions.add(currentQuestionIndex);
+            }
+            renderQuestion();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < activeQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        });
+
+        // Keyboard Arrow Support
+        document.addEventListener('keydown', (e) => {
+            if (examScreen.classList.contains('hidden') || !confirmModal.classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight' && currentQuestionIndex < activeQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else if (e.key === 'ArrowLeft' && currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        });
+
+        // Sync Instant Feedback Toggles
+        function syncFeedbackMode(enabled) {
+            isInstantFeedback = enabled;
+            instantFeedbackToggle.checked = enabled;
+            mobileFeedbackToggle.checked = enabled;
+            renderQuestion();
+        }
+
+        instantFeedbackToggle.addEventListener('change', (e) => syncFeedbackMode(e.target.checked));
+        mobileFeedbackToggle.addEventListener('change', (e) => syncFeedbackMode(e.target.checked));
+
+        // Submit Modal Flow
+        submitExamBtn.addEventListener('click', () => {
+            const unansweredCount = activeQuestions.length - Object.keys(userAnswers).length;
+            if (unansweredCount > 0) {
+                modalMessage.textContent = `You still have ${unansweredCount} unanswered question(s). Unanswered questions receive 0 points. Are you sure you want to submit your exam now?`;
+            } else {
+                modalMessage.textContent = `You have answered all 50 questions! Are you ready to submit your exam and calculate your final score out of 1000?`;
+            }
+            confirmModal.classList.remove('hidden');
+        });
+
+        modalCancelBtn.addEventListener('click', () => {
+            confirmModal.classList.add('hidden');
+        });
+
+        modalConfirmBtn.addEventListener('click', () => {
+            confirmModal.classList.add('hidden');
+            finishExam();
+        });
+
+        // ==================== RESULTS & REVIEW LOGIC ====================
+        function finishExam() {
+            clearInterval(timerInterval);
+            timerContainer.classList.add('hidden');
+            timerContainer.classList.remove('flex');
+            feedbackToggleContainer.classList.add('hidden');
+            feedbackToggleContainer.classList.remove('md:flex');
+
+            examScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unansweredCount = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                if (!userAnswers.hasOwnProperty(idx)) {
+                    unansweredCount++;
+                } else if (userAnswers[idx] === q.correctIndex) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const totalScore = correctCount * 20;
+            const passed = totalScore >= 700;
+            const accuracy = Math.round((correctCount / activeQuestions.length) * 100);
+
+            // Populate Score Card
+            document.getElementById('final-score-value').textContent = totalScore;
+            document.getElementById('stat-correct').textContent = correctCount;
+            document.getElementById('stat-incorrect').textContent = incorrectCount;
+            document.getElementById('stat-unanswered').textContent = unansweredCount;
+            document.getElementById('stat-percentage').textContent = `${accuracy}%`;
+
+            const badge = document.getElementById('pass-fail-badge');
+            const summaryText = document.getElementById('result-summary-text');
+
+            if (passed) {
+                badge.className = 'inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-3 bg-emerald-500/20 text-emerald-500 border border-emerald-500/30';
+                badge.innerHTML = `<i class="fa-solid fa-award"></i> <span>PASSED CERTIFICATION THRESHOLD</span>`;
+                summaryText.textContent = `Congratulations! You scored ${totalScore}/1000, exceeding the 700-point passing benchmark for the Unity Certified Associate Game Developer exam.`;
+            } else {
+                badge.className = 'inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-3 bg-red-500/20 text-red-500 border border-red-500/30';
+                badge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> <span>BELOW PASSING SCORE (700 REQUIRED)</span>`;
+                summaryText.textContent = `You scored ${totalScore}/1000. Review the detailed explanations below to strengthen your weak areas before your next attempt.`;
+            }
+
+            currentReviewFilter = 'all';
+            updateFilterButtons();
+            renderReviewList();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderReviewList() {
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            let displayedCount = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                const userAnswer = userAnswers[idx];
+                const isAnswered = userAnswer !== undefined;
+                const isCorrect = isAnswered && userAnswer === q.correctIndex;
+                const isFlagged = flaggedQuestions.has(idx);
+
+                // Apply Filter
+                if (currentReviewFilter === 'incorrect' && isCorrect) return;
+                if (currentReviewFilter === 'flagged' && !isFlagged) return;
+
+                displayedCount++;
+
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-6 shadow-sm';
+
+                let statusBadge = '';
+                if (isCorrect) {
+                    statusBadge = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-500 border border-emerald-500/30"><i class="fa-solid fa-check mr-1"></i> Correct (+20 pts)</span>`;
+                } else if (!isAnswered) {
+                    statusBadge = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-gray-500/15 text-gray-500 dark:text-gray-400 border border-gray-500/30"><i class="fa-solid fa-minus mr-1"></i> Unanswered (0 pts)</span>`;
+                } else {
+                    statusBadge = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-red-500/15 text-red-500 border border-red-500/30"><i class="fa-solid fa-xmark mr-1"></i> Incorrect (0 pts)</span>`;
+                }
+
+                const flagBadge = isFlagged
+                    ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-500 border border-amber-500/30"><i class="fa-solid fa-flag mr-1"></i> Flagged</span>`
+                    : '';
+
+                let optionsHtml = q.options.map((opt, oIdx) => {
+                    const isRightOpt = oIdx === q.correctIndex;
+                    const isUserOpt = oIdx === userAnswer;
+
+                    let optClass = 'p-3 rounded-xl border text-sm flex items-center justify-between ';
+                    if (isRightOpt) {
+                        optClass += 'border-emerald-500 bg-emerald-500/10 font-semibold text-emerald-700 dark:text-emerald-300';
+                    } else if (isUserOpt && !isRightOpt) {
+                        optClass += 'border-red-500 bg-red-500/10 text-red-700 dark:text-red-300';
+                    } else {
+                        optClass += 'border-gray-200 dark:border-unity-border text-gray-600 dark:text-gray-400';
+                    }
+
+                    let tag = '';
+                    if (isRightOpt) tag = `<span class="text-xs font-bold uppercase text-emerald-500 ml-2">Correct Answer</span>`;
+                    else if (isUserOpt) tag = `<span class="text-xs font-bold uppercase text-red-500 ml-2">Your Selection</span>`;
+
+                    return `
+                        <div class="${optClass}">
+                            <span><strong>${letters[oIdx]}.</strong> ${opt}</span>
+                            ${tag}
+                        </div>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-500">Question ${idx + 1}</span>
+                            <span class="text-gray-400">•</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">${q.category}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            ${flagBadge}
+                            ${statusBadge}
+                        </div>
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold mb-4">${q.question}</h4>
+                    ${q.code ? `<pre class="mb-4 p-3 rounded-xl bg-gray-900 text-gray-100 text-xs code-snippet overflow-x-auto">${q.code}</pre>` : ''}
+                    <div class="space-y-2 mb-4">
+                        ${optionsHtml}
+                    </div>
+                    <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 text-sm text-gray-700 dark:text-gray-300">
+                        <strong class="text-blue-500"><i class="fa-solid fa-lightbulb mr-1"></i> Explanation:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                reviewList.appendChild(card);
+            });
+
+            if (displayedCount === 0) {
+                reviewList.innerHTML = `
+                    <div class="bg-white dark:bg-unity-panel rounded-2xl border border-gray-200 dark:border-unity-border p-10 text-center text-gray-500 dark:text-gray-400">
+                        <i class="fa-solid fa-check-circle text-3xl text-emerald-500 mb-3"></i>
+                        <p class="font-semibold">No questions match the selected filter.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Filter Pills
+        const filterBtns = document.querySelectorAll('.review-filter-btn');
+        function updateFilterButtons() {
+            filterBtns.forEach(btn => {
+                if (btn.dataset.filter === currentReviewFilter) {
+                    btn.className = 'review-filter-btn px-4 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white transition';
+                } else {
+                    btn.className = 'review-filter-btn px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-unity-dark transition';
+                }
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentReviewFilter = btn.dataset.filter;
+                updateFilterButtons();
+                renderReviewList();
+            });
+        });
+
+        // Retake Buttons
+        document.getElementById('retake-same-btn').addEventListener('click', () => {
+            startExam(false);
+        });
+
+        document.getElementById('retake-random-btn').addEventListener('click', () => {
+            startExam(true);
+        });
+    </script>
+</body>
+</html>
